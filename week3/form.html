@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <style>
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 17px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    input[type="Submit"]:hover {
+      background-color: #88afcb;
+    }
+
+    .button-container {
+      text-align: center;
+    }
+
+    .header {
+      text-align: center;
+      color: #0f2027;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="header">Wanderlust Voyages | Travel Agency</h1>
+  </header>
+
+  <nav class="sticky-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="services">
+    <div class="container">
+      <form id="form" action="/">
+        <h1 class="header">Registration</h1>
+        <div class="input-control">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text">
+          <div class="error">
+            <div class="error-message"></div>
+          </div>
+        </div>
+        <div class="input-control">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="text">
+          <div class="error">
+            <div class="error-message"></div>
+          </div>
+        </div>
+        <div class="input-control">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password">
+          <div class="error">
+            <div class="error-message"></div>
+          </div>
+        </div>
+        <div class="input-control">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password">
+          <div class="error">
+            <div class="error-message"></div>
+          </div>
+        </div>
+        <input type="submit" value="Sign Up">
+      </form>
+    </div>
+    <script>
+      const form = document.getElementById('form');
+      const username = document.getElementById('username');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        validateInputs();
+      });
+      // show an error message and highlight the input field
+      const setError = (element, message) => {
+        const inputControl = element.parentElement;
+        const errorDisplay = inputControl.querySelector('.error');
+
+        errorDisplay.innerText = message;
+        inputControl.classList.add('error');
+        inputControl.classList.remove('success');
+      };
+      // remove the error message 
+      const setSuccess = element => {
+        const inputControl = element.parentElement;
+        const errorDisplay = inputControl.querySelector('.error');
+
+        errorDisplay.innerText = '';
+        inputControl.classList.add('success');
+        inputControl.classList.remove('error');
+      };
+      // function to validate email
+      const validateEmail = email => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zAZ]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      };
+      // function to validate all input fields
+      const validateInputs = () => {
+        const usernameValue = username.value.trim();
+        const emailValue = email.value.trim();
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        //if username is empty it displays error message
+        if (usernameValue === '') {
+          setError(username, 'Please enter your username');
+        } else {
+          setSuccess(username);
+        }
+        //if email is empty it displays error message
+        if (emailValue === '') {
+          setError(email, 'Please enter your email address');
+        } else if (!validateEmail(emailValue)) {
+          setError(email, 'Please enter a valid email address');
+        } else {
+          setSuccess(email);
+        }
+        //if password is empty it displays error message
+        if (passwordValue === '') {
+          setError(password, 'Please enter your password');
+        } else if (passwordValue.length < 8) {
+          setError(password, 'Password must be at least 8 characters.');
+        } else {
+          setSuccess(password);
+        }
+        //if confirm pasword is empty it displays error message or if it doesnt match the first password
+        if (confirmPasswordValue === '') {
+          setError(confirmPassword, 'Please enter the same password');
+        } else if (confirmPasswordValue !== passwordValue) {
+          setError(confirmPassword, "Passwords do not match");
+        } else {
+          setSuccess(confirmPassword);
+        }
+      };
+    </script>
+    </div>
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="https://www.facebook.com/">Facebook</a></li>
+      <li><a href="https://twitter.com/">Twitter</a></li>
+      <li><a href="https://www.instagram.com/">Instagram</a></li>
+    </ul>
+    <p>&copy; 2024 Wanderlust Voyages | Travel Agency. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
